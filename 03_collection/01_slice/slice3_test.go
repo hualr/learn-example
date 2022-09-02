@@ -20,7 +20,7 @@ func Test3(t *testing.T) {
 
 	fmt.Printf("len = %d, cap = %d, slice = %v\n", len(numbers), cap(numbers), numbers)
 
-	//向一个容量cap已经满的slice 追加元素，
+	//向一个容量cap已经满的slice 追加元素，自动扩容了
 	numbers = append(numbers, 2)
 
 	fmt.Printf("len = %d, cap = %d, slice = %v\n", len(numbers), cap(numbers), numbers)

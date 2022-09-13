@@ -71,6 +71,11 @@ func Test5(t *testing.T) {
 		ch <- i
 	}
 
+	// 如果不匹配default 当遇不上就会产生直接是说的悲剧
+	/**
+	1. select的随机性说明他不是和case一样顺序执行的
+	2.
+	*/
 	for {
 		select {
 		case v := <-ch:
@@ -100,4 +105,62 @@ func Test6(t *testing.T) {
 	}
 
 	fmt.Println("Main Finished..")
+}
+
+// select和go结合使用 否则会报错
+func Test7(t *testing.T) {
+	c := make(chan string)
+	c <- "hello world"
+	select {
+	/*	case msg := <-c:
+		println(msg)*/
+	/*	case c <- "happy":
+		println(<-c)*/
+	default:
+		println("channel blocking")
+	}
+}
+
+//channel select写数据 TODO
+func Test8(t *testing.T) {
+	c := make(chan string)
+
+	go func() {
+		c <- "hello world"
+	}()
+
+	go func() {
+		c <- "hello world"
+	}()
+	for {
+		select {
+		case msg := <-c:
+			println(msg)
+		case c <- "happy":
+			println(<-c)
+		default:
+			println("channel blocking")
+			time.Sleep(time.Second * 10)
+		}
+	}
+}
+
+func Test9(t *testing.T) {
+	c := make(chan string)
+
+	go func() {
+		c <- "hello world"
+	}()
+
+	for {
+		select {
+		case msg := <-c:
+			println(msg)
+		case c <- "hello world":
+			println(<-c)
+		case <-time.After(time.Second * 2):
+			println("超时！")
+
+		}
+	}
 }

@@ -47,7 +47,7 @@ func Test2(t *testing.T) {
 
 func Test3(t *testing.T) {
 	// 3 秒后自动取消运行中的协程
-	ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, _ := context.WithTimeout(context.TODO(), 3*time.Second)
 	go contextTest(ctx)
 
 	// 等待 5 秒钟，让 contextTest 协程优雅结束。

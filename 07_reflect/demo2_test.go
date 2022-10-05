@@ -22,6 +22,8 @@ func DoFiledAndMethod(input interface{}) {
 	inputType := reflect.TypeOf(input)
 	fmt.Println("inputType is :", inputType.Name())
 
+	print(inputType.Kind())
+
 	//获取input的value
 	inputValue := reflect.ValueOf(input)
 	fmt.Println("inputValue is:", inputValue)
